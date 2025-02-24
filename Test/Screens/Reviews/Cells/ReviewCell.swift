@@ -112,9 +112,9 @@ private extension ReviewCell {
     }
     
     func setupAvatarImageView() {
+        contentView.addSubview(avatarImageView)
         avatarImageView.layer.cornerRadius = ReviewCellLayout.avatarCornerRadius
         avatarImageView.layer.masksToBounds = true
-        contentView.addSubview(avatarImageView)
     }
     
     func setupUsernameLabel() {
@@ -138,6 +138,10 @@ private extension ReviewCell {
         contentView.addSubview(showMoreButton)
         showMoreButton.contentVerticalAlignment = .fill
         showMoreButton.setAttributedTitle(Config.showMoreText, for: .normal)
+        showMoreButton.addAction(UIAction { [weak self] _ in
+            guard let config = self?.config else { return }
+            config.onTapShowMore(config.id)
+        }, for: .touchUpInside)
     }
 
 }
