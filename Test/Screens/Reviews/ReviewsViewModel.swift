@@ -20,6 +20,7 @@ final class ReviewsViewModel: NSObject {
         self.state = state
         self.reviewsProvider = reviewsProvider
         self.ratingRenderer = ratingRenderer
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
         self.decoder = decoder
     }
 
@@ -53,6 +54,7 @@ private extension ReviewsViewModel {
             state.offset += state.limit
             state.shouldLoad = state.offset < reviews.count
         } catch {
+            print(error.localizedDescription)
             state.shouldLoad = true
         }
         onStateChange?(state)
@@ -79,9 +81,15 @@ private extension ReviewsViewModel {
     typealias ReviewItem = ReviewCellConfig
 
     func makeReviewItem(_ review: Review) -> ReviewItem {
+        let avatar = UIImage(named: "userpick")!
+        let userName = "\(review.firstName) \(review.lastName)".attributed(font: .username)
+        let ratingImage = RatingRenderer().ratingImage(review.rating)
         let reviewText = review.text.attributed(font: .text)
         let created = review.created.attributed(font: .created, color: .created)
         let item = ReviewItem(
+            avatar: avatar,
+            userName: userName,
+            ratingImage: ratingImage,
             reviewText: reviewText,
             created: created,
             onTapShowMore: showMoreReview
