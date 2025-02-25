@@ -50,9 +50,10 @@ private extension ReviewsViewModel {
         do {
             let data = try result.get()
             let reviews = try decoder.decode(Reviews.self, from: data)
-            state.items += reviews.items.map(makeReviewItem)
-            state.offset += state.limit
-            state.shouldLoad = state.offset < reviews.count
+            
+            state.items += reviews.items[0..<min(state.limit, reviews.count - state.offset)].map(makeReviewItem)
+            state.offset += min(state.limit, reviews.count - state.offset)
+            state.shouldLoad = state.items.count < reviews.count
             
             if !state.shouldLoad {
                 let totalReviewsConfig = makeTotalReviewsItem(reviews)

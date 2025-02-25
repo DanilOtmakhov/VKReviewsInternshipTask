@@ -39,8 +39,20 @@ private extension ReviewsViewController {
     }
 
     func setupViewModel() {
-        viewModel.onStateChange = { [weak reviewsView] _ in
-            reviewsView?.tableView.reloadData()
+        viewModel.onStateChange = { [weak reviewsView] state in
+            guard let tableView = reviewsView?.tableView else { return }
+            
+            let oldCount = tableView.numberOfRows(inSection: 0)
+            let newCount = state.items.count
+            
+            guard newCount > oldCount else { return }
+            
+            tableView.performBatchUpdates {
+                let indexPathsToInsert = (oldCount..<newCount).map {
+                    IndexPath(row: $0, section: 0)
+                }
+                tableView.insertRows(at: indexPathsToInsert, with: .automatic)
+            }
         }
     }
 
