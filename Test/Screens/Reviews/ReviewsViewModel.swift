@@ -53,6 +53,11 @@ private extension ReviewsViewModel {
             state.items += reviews.items.map(makeReviewItem)
             state.offset += state.limit
             state.shouldLoad = state.offset < reviews.count
+            
+            if !state.shouldLoad {
+                let totalReviewsConfig = makeTotalReviewsItem(reviews)
+                state.items.append(totalReviewsConfig)
+            }
         } catch {
             print(error.localizedDescription)
             state.shouldLoad = true
@@ -64,8 +69,8 @@ private extension ReviewsViewModel {
     /// Снимает ограничение на количество строк текста отзыва (раскрывает текст).
     func showMoreReview(with id: UUID) {
         guard
-            let index = state.items.firstIndex(where: { ($0 as? ReviewItem)?.id == id }),
-            var item = state.items[index] as? ReviewItem
+            let index = state.items.firstIndex(where: { ($0 as? ReviewCellConfig)?.id == id }),
+            var item = state.items[index] as? ReviewCellConfig
         else { return }
         item.maxLines = .zero
         state.items[index] = item
@@ -78,15 +83,13 @@ private extension ReviewsViewModel {
 
 private extension ReviewsViewModel {
 
-    typealias ReviewItem = ReviewCellConfig
-
-    func makeReviewItem(_ review: Review) -> ReviewItem {
+    func makeReviewItem(_ review: Review) -> ReviewCellConfig {
         let avatar = UIImage(named: "userpick")!
         let userName = "\(review.firstName) \(review.lastName)".attributed(font: .username)
         let ratingImage = ratingRenderer.ratingImage(review.rating)
         let reviewText = review.text.attributed(font: .text)
         let created = review.created.attributed(font: .created, color: .created)
-        let item = ReviewItem(
+        let config = ReviewCellConfig(
             avatar: avatar,
             userName: userName,
             ratingImage: ratingImage,
@@ -94,7 +97,13 @@ private extension ReviewsViewModel {
             created: created,
             onTapShowMore: showMoreReview
         )
-        return item
+        return config
+    }
+    
+    func makeTotalReviewsItem(_ reviews: Reviews) -> TotalReviewsCellConfig {
+        let countText = "\(reviews.count) отзывов".attributed(font: .reviewCount, color: .reviewCount)
+        let config = TotalReviewsCellConfig(countText: countText)
+        return config
     }
 
 }
