@@ -45,13 +45,15 @@ private extension ReviewsViewController {
             let oldCount = tableView.numberOfRows(inSection: 0)
             let newCount = state.items.count
             
-            guard newCount > oldCount else { return }
-            
-            tableView.performBatchUpdates {
-                let indexPathsToInsert = (oldCount..<newCount).map {
-                    IndexPath(row: $0, section: 0)
+            if newCount > oldCount {
+                tableView.performBatchUpdates {
+                    let indexPathsToInsert = (oldCount..<newCount).map {
+                        IndexPath(row: $0, section: 0)
+                    }
+                    tableView.insertRows(at: indexPathsToInsert, with: .automatic)
                 }
-                tableView.insertRows(at: indexPathsToInsert, with: .automatic)
+            } else {
+                tableView.reloadData()
             }
         }
     }
