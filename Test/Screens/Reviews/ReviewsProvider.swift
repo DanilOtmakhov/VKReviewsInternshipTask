@@ -19,8 +19,8 @@ extension ReviewsProvider {
 
     enum GetReviewsError: Error {
 
-        case badURL
-        case badData(Error)
+        case invalidURL
+        case missingData(Error)
 
     }
 
@@ -32,7 +32,7 @@ extension ReviewsProvider {
         }
         
         guard let url = bundle.url(forResource: "getReviews.response", withExtension: "json") else {
-            return completion(.failure(.badURL))
+            return completion(.failure(.invalidURL))
         }
         
         DispatchQueue.global(qos: .background).async {
@@ -43,7 +43,7 @@ extension ReviewsProvider {
                 let data = try Data(contentsOf: url)
                 completeOnTheMainThread(.success(data))
             } catch {
-                completeOnTheMainThread(.failure(.badData(error)))
+                completeOnTheMainThread(.failure(.missingData(error)))
             }
         }
     }

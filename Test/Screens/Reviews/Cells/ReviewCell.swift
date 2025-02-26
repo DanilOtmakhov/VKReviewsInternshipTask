@@ -9,7 +9,7 @@ struct ReviewCellConfig {
     /// Идентификатор конфигурации. Можно использовать для поиска конфигурации в массиве.
     let id = UUID()
     /// Фото пользователя.
-    let avatar: UIImage
+    var avatar: UIImage
     /// Имя пользователя.
     let userName: NSAttributedString
     /// Рейтинг.
@@ -25,6 +25,10 @@ struct ReviewCellConfig {
 
     /// Объект, хранящий посчитанные фреймы для ячейки отзыва.
     fileprivate let layout = ReviewCellLayout()
+    
+    mutating func updateAvatar(with image: UIImage) {
+        self.avatar = image
+    }
 
 }
 

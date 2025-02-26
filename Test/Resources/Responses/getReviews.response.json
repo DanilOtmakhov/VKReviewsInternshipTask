@@ -2,6 +2,7 @@
     "count": 127,
     "items": [
         {
+            "avatar_url": "https://randomuser.me/api/portraits/men/75.jpg",
             "first_name": "Иван",
             "last_name": "Петров",
             "rating": 5,
@@ -9,6 +10,7 @@
             "created": "1 час назад"
         },
         {
+            "avatar_url": "https://randomuser.me/api/portraits/women/65.jpg",
             "first_name": "Екатерина",
             "last_name": "Иванова",
             "rating": 3,
@@ -16,6 +18,7 @@
             "created": "12 минут назад"
         },
         {
+            "avatar_url": "https://randomuser.me/api/portraits/women/81.jpg",
             "first_name": "Евгения",
             "last_name": "Петрова",
             "rating": 4,
@@ -23,6 +26,7 @@
             "created": "35 минут назад"
         },
         {
+            "avatar_url": "https://randomuser.me/api/portraits/men/96.jpg",
             "first_name": "Илья",
             "last_name": "Петров",
             "rating": 2,
@@ -30,6 +34,7 @@
             "created": "минуту назад"
         },
         {
+            "avatar_url": "https://randomuser.me/api/portraits/men/85.jpg",
             "first_name": "Никита",
             "last_name": "Иванов",
             "rating": 5,
@@ -37,6 +42,7 @@
             "created": "только что"
         },
         {
+            "avatar_url": "https://randomuser.me/api/portraits/men/74.jpg",
             "first_name": "Олег",
             "last_name": "Николаев",
             "rating": 1,
@@ -44,6 +50,7 @@
             "created": "15 минут назад"
         },
         {
+            "avatar_url": "https://randomuser.me/api/portraits/men/68.jpg",
             "first_name": "Николай",
             "last_name": "Петров",
             "rating": 2,
@@ -53,6 +60,7 @@
 
 
         {
+            "avatar_url": "https://randomuser.me/api/portraits/men/75.jpg",
             "first_name": "Иван",
             "last_name": "Петров",
             "rating": 5,
@@ -60,6 +68,7 @@
             "created": "1 час назад"
         },
         {
+            "avatar_url": "https://randomuser.me/api/portraits/women/65.jpg",
             "first_name": "Екатерина",
             "last_name": "Иванова",
             "rating": 3,
@@ -67,6 +76,7 @@
             "created": "12 минут назад"
         },
         {
+            "avatar_url": "https://randomuser.me/api/portraits/women/81.jpg",
             "first_name": "Евгения",
             "last_name": "Петрова",
             "rating": 4,
@@ -74,6 +84,7 @@
             "created": "35 минут назад"
         },
         {
+            "avatar_url": "https://randomuser.me/api/portraits/men/96.jpg",
             "first_name": "Илья",
             "last_name": "Петров",
             "rating": 2,
@@ -81,6 +92,7 @@
             "created": "минуту назад"
         },
         {
+            "avatar_url": "https://randomuser.me/api/portraits/men/85.jpg",
             "first_name": "Никита",
             "last_name": "Иванов",
             "rating": 5,
@@ -88,6 +100,7 @@
             "created": "только что"
         },
         {
+            "avatar_url": "https://randomuser.me/api/portraits/men/74.jpg",
             "first_name": "Олег",
             "last_name": "Николаев",
             "rating": 1,
@@ -95,6 +108,7 @@
             "created": "15 минут назад"
         },
         {
+            "avatar_url": "https://randomuser.me/api/portraits/men/68.jpg",
             "first_name": "Николай",
             "last_name": "Петров",
             "rating": 2,
@@ -104,6 +118,7 @@
 
 
         {
+            "avatar_url": "https://randomuser.me/api/portraits/men/75.jpg",
             "first_name": "Иван",
             "last_name": "Петров",
             "rating": 5,
@@ -111,6 +126,7 @@
             "created": "1 час назад"
         },
         {
+            "avatar_url": "https://randomuser.me/api/portraits/women/65.jpg",
             "first_name": "Екатерина",
             "last_name": "Иванова",
             "rating": 3,
@@ -118,6 +134,7 @@
             "created": "12 минут назад"
         },
         {
+            "avatar_url": "https://randomuser.me/api/portraits/women/81.jpg",
             "first_name": "Евгения",
             "last_name": "Петрова",
             "rating": 4,
@@ -125,6 +142,7 @@
             "created": "35 минут назад"
         },
         {
+            "avatar_url": "https://randomuser.me/api/portraits/men/96.jpg",
             "first_name": "Илья",
             "last_name": "Петров",
             "rating": 2,
@@ -132,6 +150,7 @@
             "created": "минуту назад"
         },
         {
+            "avatar_url": "https://randomuser.me/api/portraits/men/85.jpg",
             "first_name": "Никита",
             "last_name": "Иванов",
             "rating": 5,
@@ -139,6 +158,7 @@
             "created": "только что"
         },
         {
+            "avatar_url": "https://randomuser.me/api/portraits/men/74.jpg",
             "first_name": "Олег",
             "last_name": "Николаев",
             "rating": 1,
@@ -146,6 +166,7 @@
             "created": "15 минут назад"
         },
         {
+            "avatar_url": "https://randomuser.me/api/portraits/men/68.jpg",
             "first_name": "Николай",
             "last_name": "Петров",
             "rating": 2,

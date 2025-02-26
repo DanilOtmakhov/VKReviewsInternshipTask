@@ -98,6 +98,27 @@ private extension ReviewsViewModel {
             created: created,
             onTapShowMore: showMoreReview
         )
+        
+        if let avatarUrl = review.avatarUrl {
+            PhotoProvider.shared.getPhoto(from: avatarUrl) { [weak self] result in
+                guard let self else { return }
+                
+                switch result {
+                case .success(let image):
+                    if let index = self.state.items.firstIndex(where: { ($0 as? ReviewCellConfig)?.id == config.id }),
+                       var updatedItem = self.state.items[index] as? ReviewCellConfig {
+                        updatedItem.updateAvatar(with: image)
+                        self.state.items[index] = updatedItem
+                        if let onStateChange = self.onStateChange {
+                            onStateChange(self.state)
+                        }
+                    }
+                case .failure:
+                    break
+                }
+            }
+        }
+        
         return config
     }
     

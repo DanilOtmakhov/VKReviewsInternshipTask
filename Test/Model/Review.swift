@@ -1,6 +1,8 @@
 /// Модель отзыва.
 struct Review: Decodable {
     
+    /// URL фотографии профиля.
+    let avatarUrl: String?
     /// Имя пользователя.
     let firstName, lastName: String
     /// Рейтинг.
