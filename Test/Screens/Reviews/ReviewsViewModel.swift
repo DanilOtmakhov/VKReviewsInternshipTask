@@ -36,7 +36,7 @@ extension ReviewsViewModel {
     func getReviews() {
         guard state.shouldLoad else { return }
         state.shouldLoad = false
-        reviewsProvider.getReviews(offset: state.offset, completion: gotReviews)
+        reviewsProvider.getReviews(completion: gotReviews)
     }
 
 }
@@ -88,12 +88,14 @@ private extension ReviewsViewModel {
         let avatar = UIImage(named: "userpick")!
         let userName = "\(review.firstName) \(review.lastName)".attributed(font: .username)
         let ratingImage = ratingRenderer.ratingImage(review.rating)
+        let photos = [UIImage(named: "IMG_0001")!, UIImage(named: "IMG_0002")!, UIImage(named: "IMG_0003")!, UIImage(named: "IMG_0004")!]
         let reviewText = review.text.attributed(font: .text)
         let created = review.created.attributed(font: .created, color: .created)
         let config = ReviewCellConfig(
             avatar: avatar,
             userName: userName,
             ratingImage: ratingImage,
+            photos: photos,
             reviewText: reviewText,
             created: created,
             onTapShowMore: showMoreReview

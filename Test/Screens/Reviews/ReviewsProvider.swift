@@ -24,7 +24,7 @@ extension ReviewsProvider {
 
     }
 
-    func getReviews(offset: Int = 0, completion: @escaping (GetReviewsResult) -> Void) {
+    func getReviews(completion: @escaping (GetReviewsResult) -> Void) {
         let completeOnTheMainThread: (GetReviewsResult) -> Void = { result in
             DispatchQueue.main.async {
                 completion(result)
