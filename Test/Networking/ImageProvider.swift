@@ -8,9 +8,11 @@
 import UIKit
 
 /// Класс для загрузки отзывов.
-final class PhotoProvider {
+final class ImageProvider {
     
-    static let shared = PhotoProvider()
+    static let shared = ImageProvider()
+    
+    private let memoryCache = NSCache<NSString, UIImage>()
     
     private init() {}
     
@@ -18,11 +20,11 @@ final class PhotoProvider {
 
 // MARK: - Internal
 
-extension PhotoProvider {
+extension ImageProvider {
     
-    typealias GetPhotoResult = Result<UIImage, GetPhotoError>
+    typealias FetchImageResult = Result<UIImage, FetchImageError>
     
-    enum GetPhotoError: Error {
+    enum FetchImageError: Error {
         
         case invalidURL
         case missingData
@@ -32,8 +34,8 @@ extension PhotoProvider {
         
     }
     
-    func getPhoto(from urlString: String, completion: @escaping (GetPhotoResult) -> Void) {
-        let completeOnTheMainThread: (GetPhotoResult) -> Void = { result in
+    func fetchImage(from urlString: String, completion: @escaping (FetchImageResult) -> Void) {
+        let completeOnTheMainThread: (FetchImageResult) -> Void = { result in
             DispatchQueue.main.async {
                 completion(result)
             }
@@ -48,15 +50,19 @@ extension PhotoProvider {
         
         let request = URLRequest(url: url)
         
-        DispatchQueue.global(qos: .background).async { [completeOnTheMainThread] in
-            if let cachedResponse = URLCache.shared.cachedResponse(for: request),
-               let image = UIImage(data: cachedResponse.data) {
-                completeOnTheMainThread(.success(image))
-                return
-            }
+        if let cachedImage = memoryCache.object(forKey: urlString as NSString) {
+            completeOnTheMainThread(.success(cachedImage))
+            return
         }
         
-        URLSession.shared.dataTask(with: request) { data, response, error in
+        if let cachedResponse = URLCache.shared.cachedResponse(for: request),
+           let image = UIImage(data: cachedResponse.data) {
+            memoryCache.setObject(image, forKey: urlString as NSString)
+            completeOnTheMainThread(.success(image))
+            return
+        }
+        
+        let task = URLSession.shared.dataTask(with: request) { [weak self] data, response, error in
             if let data, let response, let statusCode = (response as? HTTPURLResponse)?.statusCode {
                 if 200 ..< 300 ~= statusCode {
                     guard let image = UIImage(data: data) else {
@@ -66,6 +72,7 @@ extension PhotoProvider {
                     
                     let cachedResponse = CachedURLResponse(response: response, data: data)
                     URLCache.shared.storeCachedResponse(cachedResponse, for: request)
+                    self?.memoryCache.setObject(image, forKey: urlString as NSString)
                     
                     completeOnTheMainThread(.success(image))
                 } else {
@@ -76,7 +83,8 @@ extension PhotoProvider {
             } else {
                 completeOnTheMainThread(.failure(.urlSessionError))
             }
-        }.resume()
+        }
+        task.resume()
     }
     
 }

@@ -5,6 +5,10 @@ final class ReviewsViewModel: NSObject {
 
     /// Замыкание, вызываемое при изменении `state`.
     var onStateChange: ((State) -> Void)?
+    /// Замыкание, вызываемое при обновлении
+    var onRefreshComplete: (() -> Void)?
+    
+    private var isPullToRefresh: Bool = false
 
     private var state: State
     private let reviewsProvider: ReviewsProvider
@@ -38,6 +42,11 @@ extension ReviewsViewModel {
         state.shouldLoad = false
         reviewsProvider.getReviews(completion: gotReviews)
     }
+    
+    func startPullToRefresh() {
+        isPullToRefresh = true
+        getReviews()
+    }
 
 }
 
@@ -64,6 +73,11 @@ private extension ReviewsViewModel {
             state.shouldLoad = true
         }
         onStateChange?(state)
+        
+        if isPullToRefresh {
+            onRefreshComplete?()
+            isPullToRefresh = false
+        }
     }
 
     /// Метод, вызываемый при нажатии на кнопку "Показать полностью...".
@@ -102,7 +116,7 @@ private extension ReviewsViewModel {
         )
         
         if let avatarUrl = review.avatarUrl {
-            PhotoProvider.shared.getPhoto(from: avatarUrl) { [weak self] result in
+            ImageProvider.shared.fetchImage(from: avatarUrl) { [weak self] result in
                 guard let self else { return }
                 
                 switch result {

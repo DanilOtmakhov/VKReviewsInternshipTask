@@ -35,12 +35,13 @@ private extension ReviewsViewController {
         let reviewsView = ReviewsView()
         reviewsView.tableView.delegate = viewModel
         reviewsView.tableView.dataSource = viewModel
+        reviewsView.tableView.refreshControl?.addTarget(self, action: #selector(refreshReviews), for: .valueChanged)
         return reviewsView
     }
 
     func setupViewModel() {
-        viewModel.onStateChange = { [weak reviewsView] state in
-            guard let tableView = reviewsView?.tableView else { return }
+        viewModel.onStateChange = { [weak self] state in
+            guard let tableView = self?.reviewsView.tableView else { return }
             
             let oldCount = tableView.numberOfRows(inSection: 0)
             let newCount = state.items.count
@@ -56,6 +57,16 @@ private extension ReviewsViewController {
                 tableView.reloadData()
             }
         }
+        
+        viewModel.onRefreshComplete = { [weak self] in
+            guard let tableView = self?.reviewsView.tableView else { return }
+            tableView.refreshControl?.endRefreshing()
+        }
+    }
+    
+    @objc func refreshReviews() {
+        reviewsView.tableView.refreshControl?.beginRefreshing()
+        viewModel.startPullToRefresh()
     }
 
 }

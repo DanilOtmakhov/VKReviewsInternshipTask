@@ -28,8 +28,12 @@ struct ReviewCellConfig {
     /// Объект, хранящий посчитанные фреймы для ячейки отзыва.
     fileprivate let layout = ReviewCellLayout()
     
-    mutating func updateAvatar(with image: UIImage) {
-        self.avatar = image
+    mutating func updateAvatar(with photo: UIImage) {
+        self.avatar = photo
+    }
+    
+    mutating func updatePhotos(with photos: [UIImage]) {
+        self.photos = photos
     }
 
 }

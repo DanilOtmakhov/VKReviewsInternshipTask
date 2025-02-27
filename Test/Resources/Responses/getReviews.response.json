@@ -7,7 +7,13 @@
             "last_name": "Петров",
             "rating": 5,
             "text": "Кроссовки хорошие. Удобные. Как по мне сшиты.",
-            "created": "1 час назад"
+            "created": "1 час назад",
+            "photo_urls": [
+                "https://images.pexels.com/photos/1680247/pexels-photo-1680247.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+                "https://images.pexels.com/photos/29583046/pexels-photo-29583046.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+                "https://images.pexels.com/photos/1080953/pexels-photo-1080953.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+                "https://images.pexels.com/photos/20584736/pexels-photo-20584736.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+            ]
         },
         {
             "avatar_url": "https://randomuser.me/api/portraits/women/65.jpg",
@@ -73,7 +79,12 @@
             "last_name": "Иванова",
             "rating": 3,
             "text": "Скользские ужасно.",
-            "created": "12 минут назад"
+            "created": "12 минут назад",
+            "photo_urls": [
+                "https://images.pexels.com/photos/29583046/pexels-photo-29583046.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+                "https://images.pexels.com/photos/20584736/pexels-photo-20584736.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+                "https://images.pexels.com/photos/920689/pexels-photo-920689.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+            ]
         },
         {
             "avatar_url": "https://randomuser.me/api/portraits/women/81.jpg",
@@ -97,7 +108,10 @@
             "last_name": "Иванов",
             "rating": 5,
             "text": "Отлично выглядят, хоть и скользковатые...",
-            "created": "только что"
+            "created": "только что",
+            "photo_urls": [
+                "https://images.pexels.com/photos/920689/pexels-photo-920689.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+            ]
         },
         {
             "avatar_url": "https://randomuser.me/api/portraits/men/74.jpg",
@@ -113,7 +127,14 @@
             "last_name": "Петров",
             "rating": 2,
             "text": "",
-            "created": "вчера в 12:39"
+            "created": "вчера в 12:39",
+            "photo_urls": [
+                "https://images.pexels.com/photos/29583046/pexels-photo-29583046.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+                "https://images.pexels.com/photos/1680247/pexels-photo-1680247.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+                "https://images.pexels.com/photos/1080953/pexels-photo-1080953.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+                "https://images.pexels.com/photos/20584736/pexels-photo-20584736.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+                "https://images.pexels.com/photos/920689/pexels-photo-920689.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+            ]
         },
 
 
@@ -131,7 +152,10 @@
             "last_name": "Иванова",
             "rating": 3,
             "text": "Скользские ужасно.",
-            "created": "12 минут назад"
+            "created": "12 минут назад",
+            "photo_urls": [
+                "https://images.pexels.com/photos/30836317/pexels-photo-30836317.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+            ]
         },
         {
             "avatar_url": "https://randomuser.me/api/portraits/women/81.jpg",
@@ -139,7 +163,11 @@
             "last_name": "Петрова",
             "rating": 4,
             "text": "Прошла по снегу 30 метров, 5 раз упала. Спасибо мужу, поддерживал. Возврат, к сожалению.",
-            "created": "35 минут назад"
+            "created": "35 минут назад",
+            "photo_urls": [
+                "https://images.pexels.com/photos/1080953/pexels-photo-1080953.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+                "https://images.pexels.com/photos/1624496/pexels-photo-1624496.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+            ]
         },
         {
             "avatar_url": "https://randomuser.me/api/portraits/men/96.jpg",
@@ -163,7 +191,10 @@
             "last_name": "Николаев",
             "rating": 1,
             "text": "Ребёнок жалуется, что очень скользские. Пока шла до школы...",
-            "created": "15 минут назад"
+            "created": "15 минут назад",
+            "photo_urls": [
+                "https://images.pexels.com/photos/1624496/pexels-photo-1624496.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+            ]
         },
         {
             "avatar_url": "https://randomuser.me/api/portraits/men/68.jpg",

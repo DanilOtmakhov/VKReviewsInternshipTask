@@ -3,6 +3,7 @@ import UIKit
 final class ReviewsView: UIView {
 
     let tableView = UITableView()
+    private let refreshControl = UIRefreshControl()
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -35,6 +36,7 @@ private extension ReviewsView {
         tableView.allowsSelection = false
         tableView.register(ReviewCell.self, forCellReuseIdentifier: ReviewCellConfig.reuseId)
         tableView.register(TotalReviewsCell.self, forCellReuseIdentifier: TotalReviewsCellConfig.reuseId)
+        tableView.refreshControl = refreshControl
     }
 
 }
