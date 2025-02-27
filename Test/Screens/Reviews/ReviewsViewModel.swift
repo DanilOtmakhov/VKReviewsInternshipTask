@@ -5,7 +5,7 @@ final class ReviewsViewModel: NSObject {
 
     /// Замыкание, вызываемое при изменении `state`.
     var onStateChange: ((State) -> Void)?
-    /// Замыкание, вызываемое при обновлении
+    /// Замыкание, вызываемое при обновлении.
     var onRefreshComplete: (() -> Void)?
     
     private var isPullToRefresh: Bool = false
@@ -53,21 +53,14 @@ extension ReviewsViewModel {
 // MARK: - Private
 
 private extension ReviewsViewModel {
-
+    
     /// Метод обработки получения отзывов.
     func gotReviews(_ result: ReviewsProvider.GetReviewsResult) {
         do {
             let data = try result.get()
             let reviews = try decoder.decode(Reviews.self, from: data)
             
-            state.items += reviews.items[0..<min(state.limit, reviews.count - state.offset)].map(makeReviewItem)
-            state.offset += min(state.limit, reviews.count - state.offset)
-            state.shouldLoad = state.items.count < reviews.count
-            
-            if !state.shouldLoad {
-                let totalReviewsConfig = makeTotalReviewsItem(reviews)
-                state.items.append(totalReviewsConfig)
-            }
+            updateState(reviews)
         } catch {
             print(error.localizedDescription)
             state.shouldLoad = true
@@ -77,6 +70,17 @@ private extension ReviewsViewModel {
         if isPullToRefresh {
             onRefreshComplete?()
             isPullToRefresh = false
+        }
+    }
+    
+    func updateState(_ reviews: Reviews) {
+        state.items += reviews.items[0..<min(state.limit, reviews.count - state.offset)].map(makeReviewItem)
+        state.offset += min(state.limit, reviews.count - state.offset)
+        state.shouldLoad = state.items.count < reviews.count
+        
+        if !state.shouldLoad {
+            let totalReviewsConfig = makeTotalReviewsItem(reviews)
+            state.items.append(totalReviewsConfig)
         }
     }
 
