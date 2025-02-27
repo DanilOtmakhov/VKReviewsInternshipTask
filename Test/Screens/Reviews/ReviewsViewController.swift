@@ -23,6 +23,7 @@ final class ReviewsViewController: UIViewController {
         super.viewDidLoad()
         setupViewModel()
         viewModel.getReviews()
+        reviewsView.activityIndicator.startAnimating()
     }
 
 }
@@ -41,6 +42,8 @@ private extension ReviewsViewController {
 
     func setupViewModel() {
         viewModel.onStateChange = { [weak self] state in
+            self?.reviewsView.activityIndicator.stopAnimating()
+            
             guard let tableView = self?.reviewsView.tableView else { return }
             
             let oldCount = tableView.numberOfRows(inSection: 0)
