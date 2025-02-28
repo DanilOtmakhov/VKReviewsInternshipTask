@@ -55,7 +55,7 @@ private extension CustomActivityIndicator {
         circleLayer.fillColor = UIColor.clear.cgColor
         circleLayer.strokeColor = UIColor.systemGray.cgColor
         circleLayer.lineWidth = 2
-        circleLayer.strokeEnd = 0.25
+        circleLayer.strokeEnd = 0.35
         circleLayer.lineCap = .round
         
         self.layer.addSublayer(circleLayer)
