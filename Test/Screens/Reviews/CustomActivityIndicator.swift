@@ -31,12 +31,19 @@ extension CustomActivityIndicator {
         rotation.toValue = CGFloat.pi * 2
         rotation.duration = 1
         rotation.repeatCount = .infinity
-        layer.add(rotation, forKey: "rotationAnimation")
+        circleLayer.add(rotation, forKey: "rotationAnimation")
+        
+        let strokeAnimation = CABasicAnimation(keyPath: "strokeEnd")
+        strokeAnimation.fromValue = 0.35
+        strokeAnimation.toValue = 1
+        strokeAnimation.duration = 2
+        strokeAnimation.repeatCount = .infinity
+        circleLayer.add(strokeAnimation, forKey: "strokeEndAnimation")
     }
     
     func stopAnimating() {
         isHidden = true
-        layer.removeAllAnimations()
+        circleLayer.removeAllAnimations()
     }
     
 }
@@ -46,9 +53,7 @@ extension CustomActivityIndicator {
 private extension CustomActivityIndicator {
     
     func setup() {
-        frame = CGRect(x: 0, y: 0, width: 25, height: 25)
-        
-        let rect = self.bounds
+        let rect = CGRect(x: 0, y: 0, width: 30, height: 30)
         let circularPath = UIBezierPath(ovalIn: rect)
         
         circleLayer.path = circularPath.cgPath
@@ -57,8 +62,15 @@ private extension CustomActivityIndicator {
         circleLayer.lineWidth = 2
         circleLayer.strokeEnd = 0.35
         circleLayer.lineCap = .round
+        circleLayer.frame = rect
         
-        self.layer.addSublayer(circleLayer)
+        layer.addSublayer(circleLayer)
+        
+        translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            widthAnchor.constraint(equalToConstant: 40),
+            heightAnchor.constraint(equalToConstant: 40)
+        ])
     }
     
 }
