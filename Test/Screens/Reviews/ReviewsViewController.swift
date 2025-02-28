@@ -9,9 +9,14 @@ final class ReviewsViewController: UIViewController {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        viewModel.onStateChange = nil
+        viewModel.onRefreshComplete = nil
     }
 
     override func loadView() {
@@ -69,7 +74,7 @@ private extension ReviewsViewController {
     
     @objc func refreshReviews() {
         reviewsView.tableView.refreshControl?.beginRefreshing()
-        viewModel.startPullToRefresh()
+        viewModel.refreshReviews()
     }
 
 }

@@ -43,8 +43,12 @@ extension ReviewsViewModel {
         reviewsProvider.getReviews(completion: gotReviews)
     }
     
-    func startPullToRefresh() {
+    func refreshReviews() {
         isPullToRefresh = true
+        state.items = []
+        state.offset = 0
+        state.shouldLoad = true
+        onStateChange?(state)
         getReviews()
     }
 
@@ -59,7 +63,6 @@ private extension ReviewsViewModel {
         do {
             let data = try result.get()
             let reviews = try decoder.decode(Reviews.self, from: data)
-            
             updateState(reviews)
         } catch {
             print(error.localizedDescription)
@@ -95,13 +98,31 @@ private extension ReviewsViewModel {
         state.items[index] = item
         onStateChange?(state)
     }
+    
+    func fetchAvatar(from avatarUrl: String, _ configID: UUID) {
+        ImageProvider.shared.fetchImage(from: avatarUrl) { [weak self] result in
+            guard let self else { return }
+            
+            switch result {
+            case .success(let image):
+                if let index = state.items.firstIndex(where: { ($0 as? ReviewCellConfig)?.id == configID }),
+                   var updatedItem = state.items[index] as? ReviewCellConfig {
+                    updatedItem.updateAvatar(with: image)
+                    state.items[index] = updatedItem
+                    onStateChange?(state)
+                }
+            case .failure:
+                break
+            }
+        }
+    }
 
 }
 
 // MARK: - Items
 
 private extension ReviewsViewModel {
-
+    
     func makeReviewItem(_ review: Review) -> ReviewCellConfig {
         let avatar = UIImage(named: "userpick")!
         let userName = "\(review.firstName) \(review.lastName)".attributed(font: .username)
@@ -120,23 +141,7 @@ private extension ReviewsViewModel {
         )
         
         if let avatarUrl = review.avatarUrl {
-            ImageProvider.shared.fetchImage(from: avatarUrl) { [weak self] result in
-                guard let self else { return }
-                
-                switch result {
-                case .success(let image):
-                    if let index = self.state.items.firstIndex(where: { ($0 as? ReviewCellConfig)?.id == config.id }),
-                       var updatedItem = self.state.items[index] as? ReviewCellConfig {
-                        updatedItem.updateAvatar(with: image)
-                        self.state.items[index] = updatedItem
-                        if let onStateChange = self.onStateChange {
-                            onStateChange(self.state)
-                        }
-                    }
-                case .failure:
-                    break
-                }
-            }
+            fetchAvatar(from: avatarUrl, config.id)
         }
         
         return config
