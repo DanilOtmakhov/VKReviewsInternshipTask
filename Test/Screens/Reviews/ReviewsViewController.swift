@@ -4,6 +4,7 @@ final class ReviewsViewController: UIViewController {
 
     private lazy var reviewsView = makeReviewsView()
     private let viewModel: ReviewsViewModel
+    private let activityIndicator = CustomActivityIndicator()
 
     init(viewModel: ReviewsViewModel) {
         self.viewModel = viewModel
@@ -27,8 +28,9 @@ final class ReviewsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViewModel()
+        setupActivityIndicator()
         viewModel.getReviews()
-        reviewsView.activityIndicator.startAnimating()
+        activityIndicator.startAnimating()
     }
 
 }
@@ -44,10 +46,19 @@ private extension ReviewsViewController {
         reviewsView.tableView.refreshControl?.addTarget(self, action: #selector(refreshReviews), for: .valueChanged)
         return reviewsView
     }
+    
+    func setupActivityIndicator() {
+        view.addSubview(activityIndicator)
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+    }
 
     func setupViewModel() {
         viewModel.onStateChange = { [weak self] state in
-            self?.reviewsView.activityIndicator.stopAnimating()
+            self?.activityIndicator.stopAnimating()
             
             guard let tableView = self?.reviewsView.tableView else { return }
             
