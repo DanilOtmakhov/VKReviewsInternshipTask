@@ -72,14 +72,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		2166686D2D48DEBF009AAA76 /* Protocols */ = {
-			isa = PBXGroup;
-			children = (
-				21B841702D47C5F00085DAA2 /* TableCellConfig.swift */,
-			);
-			path = Protocols;
-			sourceTree = "<group>";
-		};
 		216668742D48EA59009AAA76 /* Constants */ = {
 			isa = PBXGroup;
 			children = (
@@ -94,6 +86,7 @@
 			children = (
 				21B82E252D47B0640085DAA2 /* ReviewCell.swift */,
 				302CC7632D6D14E700A0FC61 /* TotalReviewsCell.swift */,
+				21B841702D47C5F00085DAA2 /* TableCellConfig.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -146,7 +139,6 @@
 			children = (
 				21B82E2B2D47B0640085DAA2 /* AppDelegate.swift */,
 				21B82E2A2D47B0640085DAA2 /* Screens */,
-				2166686D2D48DEBF009AAA76 /* Protocols */,
 				30D8BBC42D7070D300F2F9DB /* Networking */,
 				21B841682D47BC7F0085DAA2 /* Model */,
 				216668742D48EA59009AAA76 /* Constants */,
@@ -159,14 +151,10 @@
 		21B82E372D47B1090085DAA2 /* Reviews */ = {
 			isa = PBXGroup;
 			children = (
-				21ED1F642D69D0340012D6F6 /* ReviewsScreenFactory.swift */,
-				21B82E292D47B0640085DAA2 /* ReviewsViewController.swift */,
-				2166A0F32D4A5B25009AAA76 /* ReviewsView.swift */,
-				21B8416C2D47C0E20085DAA2 /* ReviewsViewModelState.swift */,
-				21B82E332D47B0AA0085DAA2 /* ReviewsViewModel.swift */,
-				305899A62D72513900CB9F27 /* CustomActivityIndicator.swift */,
-				21667B7F2D4A25B2009AAA76 /* RatingRenderer.swift */,
-				30D8BB692D6FA97500F2F9DB /* Photos */,
+				303240EB2D7330C3008F3170 /* Controllers */,
+				303240EA2D73308E008F3170 /* Factory */,
+				303240E92D733083008F3170 /* ViewModel */,
+				303240E82D73307D008F3170 /* View */,
 				216668752D48F39E009AAA76 /* Cells */,
 			);
 			path = Reviews;
@@ -198,12 +186,40 @@
 			path = Root;
 			sourceTree = "<group>";
 		};
-		30D8BB692D6FA97500F2F9DB /* Photos */ = {
+		303240E82D73307D008F3170 /* View */ = {
 			isa = PBXGroup;
 			children = (
 				30D8BB612D6F519400F2F9DB /* PhotosView.swift */,
+				2166A0F32D4A5B25009AAA76 /* ReviewsView.swift */,
+				305899A62D72513900CB9F27 /* CustomActivityIndicator.swift */,
+				21667B7F2D4A25B2009AAA76 /* RatingRenderer.swift */,
 			);
-			path = Photos;
+			path = View;
+			sourceTree = "<group>";
+		};
+		303240E92D733083008F3170 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				21B8416C2D47C0E20085DAA2 /* ReviewsViewModelState.swift */,
+				21B82E332D47B0AA0085DAA2 /* ReviewsViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		303240EA2D73308E008F3170 /* Factory */ = {
+			isa = PBXGroup;
+			children = (
+				21ED1F642D69D0340012D6F6 /* ReviewsScreenFactory.swift */,
+			);
+			path = Factory;
+			sourceTree = "<group>";
+		};
+		303240EB2D7330C3008F3170 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				21B82E292D47B0640085DAA2 /* ReviewsViewController.swift */,
+			);
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 		30D8BBC42D7070D300F2F9DB /* Networking */ = {

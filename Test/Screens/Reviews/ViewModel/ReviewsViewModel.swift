@@ -116,6 +116,35 @@ private extension ReviewsViewModel {
             }
         }
     }
+    
+    func fetchPhotos(from urls: [String], configID: UUID) {
+        var fetchedImages = [UIImage]()
+        
+        let dispatchGroup = DispatchGroup()
+        
+        for url in urls {
+            dispatchGroup.enter()
+            ImageProvider.shared.fetchImage(from: url) { result in
+                switch result {
+                case .success(let image):
+                    fetchedImages.append(image)
+                case .failure:
+                    break
+                }
+                dispatchGroup.leave()
+            }
+        }
+        
+        dispatchGroup.notify(queue: .main) {
+            if let index = self.state.items.firstIndex(where: { ($0 as? ReviewCellConfig)?.id == configID }),
+               var updatedItem = self.state.items[index] as? ReviewCellConfig {
+                updatedItem.updatePhotos(with: fetchedImages)
+                self.state.items[index] = updatedItem
+                self.onStateChange?(self.state)
+            }
+        }
+    }
+
 
 }
 
@@ -127,14 +156,13 @@ private extension ReviewsViewModel {
         let avatar = UIImage(named: "userpick")!
         let userName = "\(review.firstName) \(review.lastName)".attributed(font: .username)
         let ratingImage = ratingRenderer.ratingImage(review.rating)
-        let photos = [UIImage(named: "IMG_0001")!, UIImage(named: "IMG_0002")!, UIImage(named: "IMG_0003")!, UIImage(named: "IMG_0004")!]
         let reviewText = review.text.attributed(font: .text)
         let created = review.created.attributed(font: .created, color: .created)
         let config = ReviewCellConfig(
             avatar: avatar,
             userName: userName,
             ratingImage: ratingImage,
-            photos: photos,
+            photos: nil,
             reviewText: reviewText,
             created: created,
             onTapShowMore: showMoreReview
@@ -142,6 +170,10 @@ private extension ReviewsViewModel {
         
         if let avatarUrl = review.avatarUrl {
             fetchAvatar(from: avatarUrl, config.id)
+        }
+        
+        if let photoUrls = review.photoUrls {
+            fetchPhotos(from: photoUrls, configID: config.id)
         }
         
         return config
@@ -179,27 +211,42 @@ extension ReviewsViewModel: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         state.items[indexPath.row].height(with: tableView.bounds.size)
     }
-
-    /// Метод дозапрашивает отзывы, если до конца списка отзывов осталось два с половиной экрана по высоте.
-    func scrollViewWillEndDragging(
-        _ scrollView: UIScrollView,
-        withVelocity velocity: CGPoint,
-        targetContentOffset: UnsafeMutablePointer<CGPoint>
-    ) {
-        if shouldLoadNextPage(scrollView: scrollView, targetOffsetY: targetContentOffset.pointee.y) {
+    
+//    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+//        guard indexPath.row < state.items.count else { return }
+//        
+//        let config = state.items[indexPath.row]
+//        
+//        if let reviewConfig = config as? ReviewCellConfig {
+//            if let avatarUrl = reviewConfig.avatarUrl {
+//                ImageProvider.shared.cancelFetch(for: avatarUrl)
+//            }
+//            
+//            if let photoUrls = reviewConfig.photoUrls {
+//                for url in photoUrls {
+//                    ImageProvider.shared.cancelFetch(for: url)
+//                }
+//            }
+//        }
+//    }
+    
+    /// Метод дозапрашивает отзывы, если до конца списка отзывов осталось три экрана по высоте.
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if shouldLoadNextPage(scrollView: scrollView) {
             getReviews()
         }
     }
 
     private func shouldLoadNextPage(
         scrollView: UIScrollView,
-        targetOffsetY: CGFloat,
-        screensToLoadNextPage: Double = 2.5
+        screensToLoadNextPage: Double = 3.0
     ) -> Bool {
         let viewHeight = scrollView.bounds.height
         let contentHeight = scrollView.contentSize.height
         let triggerDistance = viewHeight * screensToLoadNextPage
-        let remainingDistance = contentHeight - viewHeight - targetOffsetY
+        let currentOffset = scrollView.contentOffset.y
+        let remainingDistance = contentHeight - currentOffset - viewHeight
+        
         return remainingDistance <= triggerDistance
     }
 
