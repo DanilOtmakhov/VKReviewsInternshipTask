@@ -24,6 +24,8 @@ struct ReviewCellConfig {
     let created: NSAttributedString
     /// Замыкание, вызываемое при нажатии на кнопку "Показать полностью...".
     let onTapShowMore: (UUID) -> Void
+    
+    let onPhotoTap: (([UIImage], Int) -> Void)?
 
     /// Объект, хранящий посчитанные фреймы для ячейки отзыва.
     fileprivate let layout = ReviewCellLayout()
@@ -55,6 +57,7 @@ extension ReviewCellConfig: TableCellConfig {
         cell.reviewTextLabel.attributedText = reviewText
         cell.reviewTextLabel.numberOfLines = maxLines
         cell.createdLabel.attributedText = created
+        cell.onPhotoTap = onPhotoTap
         cell.config = self
     }
 
@@ -89,6 +92,8 @@ final class ReviewCell: UITableViewCell {
     fileprivate let reviewTextLabel = UILabel()
     fileprivate let createdLabel = UILabel()
     fileprivate let showMoreButton = UIButton()
+    
+    var onPhotoTap: (([UIImage], Int) -> Void)?
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -143,6 +148,9 @@ private extension ReviewCell {
     
     func setupPhotosView() {
         contentView.addSubview(photosView)
+        photosView.onPhotoTap = { [weak self] images, index in
+            self?.config?.onPhotoTap?(images, index)
+        }
     }
 
     func setupReviewTextLabel() {

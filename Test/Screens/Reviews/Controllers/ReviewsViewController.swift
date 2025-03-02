@@ -81,11 +81,20 @@ private extension ReviewsViewController {
             guard let tableView = self?.reviewsView.tableView else { return }
             tableView.refreshControl?.endRefreshing()
         }
+        
+        viewModel.onPhotoTapped = { [weak self] photos, index in
+            self?.openPhotosViewer(photos: photos, startIndex: index)
+        }
     }
     
     @objc func refreshReviews() {
         reviewsView.tableView.refreshControl?.beginRefreshing()
         viewModel.refreshReviews()
+    }
+    
+    func openPhotosViewer(photos: [UIImage], startIndex: Int) {
+        let viewController = PhotosViewerViewController(photos: photos, startIndex: startIndex)
+        present(viewController, animated: true)
     }
 
 }

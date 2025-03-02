@@ -7,6 +7,8 @@ final class ReviewsViewModel: NSObject {
     var onStateChange: ((State) -> Void)?
     /// Замыкание, вызываемое при обновлении ленты отзывов.
     var onRefreshComplete: (() -> Void)?
+    ///
+    var onPhotoTapped: (([UIImage], Int) -> Void)?
     
     private var isPullToRefresh: Bool = false
 
@@ -153,6 +155,7 @@ private extension ReviewsViewModel {
 
 private extension ReviewsViewModel {
     
+    /// Метод создает конфигурацию ячейки отзыва.
     func makeReviewItem(_ review: Review) -> ReviewCellConfig {
         let avatar = UIImage(named: "userpick")!
         let userName = "\(review.firstName) \(review.lastName)".attributed(font: .username)
@@ -166,8 +169,9 @@ private extension ReviewsViewModel {
             photos: nil,
             reviewText: reviewText,
             created: created,
-            onTapShowMore: showMoreReview
-        )
+            onTapShowMore: showMoreReview) { [weak self] photos, index in
+                self?.onPhotoTapped?(photos, index)
+            }
         
         if let avatarUrl = review.avatarUrl {
             fetchAvatar(from: avatarUrl, config.id)
@@ -180,6 +184,7 @@ private extension ReviewsViewModel {
         return config
     }
     
+    /// Метод создает конфигурацию последней ячеки количества отзывов.
     func makeTotalReviewsItem(_ reviews: Reviews) -> TotalReviewsCellConfig {
         let countText = "\(reviews.count) отзывов".attributed(font: .reviewCount, color: .reviewCount)
         let config = TotalReviewsCellConfig(countText: countText)
@@ -200,6 +205,7 @@ extension ReviewsViewModel: UITableViewDataSource {
         let config = state.items[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: config.reuseId, for: indexPath)
         config.update(cell: cell)
+        
         return cell
     }
 
