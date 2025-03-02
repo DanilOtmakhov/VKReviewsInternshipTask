@@ -5,7 +5,7 @@ final class ReviewsViewModel: NSObject {
 
     /// Замыкание, вызываемое при изменении `state`.
     var onStateChange: ((State) -> Void)?
-    /// Замыкание, вызываемое при обновлении.
+    /// Замыкание, вызываемое при обновлении ленты отзывов.
     var onRefreshComplete: (() -> Void)?
     
     private var isPullToRefresh: Bool = false
@@ -43,6 +43,7 @@ extension ReviewsViewModel {
         reviewsProvider.getReviews(completion: gotReviews)
     }
     
+    /// Метод обновления ленты отзывов.
     func refreshReviews() {
         isPullToRefresh = true
         state.items = []
@@ -211,24 +212,6 @@ extension ReviewsViewModel: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         state.items[indexPath.row].height(with: tableView.bounds.size)
     }
-    
-//    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-//        guard indexPath.row < state.items.count else { return }
-//        
-//        let config = state.items[indexPath.row]
-//        
-//        if let reviewConfig = config as? ReviewCellConfig {
-//            if let avatarUrl = reviewConfig.avatarUrl {
-//                ImageProvider.shared.cancelFetch(for: avatarUrl)
-//            }
-//            
-//            if let photoUrls = reviewConfig.photoUrls {
-//                for url in photoUrls {
-//                    ImageProvider.shared.cancelFetch(for: url)
-//                }
-//            }
-//        }
-//    }
     
     /// Метод дозапрашивает отзывы, если до конца списка отзывов осталось три экрана по высоте.
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

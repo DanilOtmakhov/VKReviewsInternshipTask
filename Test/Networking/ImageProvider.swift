@@ -7,13 +7,12 @@
 
 import UIKit
 
-/// Класс для загрузки отзывов.
+/// Класс для загрузки и кэширования изображений.
 final class ImageProvider {
     
     static let shared = ImageProvider()
     
     private let memoryCache = NSCache<NSString, UIImage>()
-//    private var activeTasks: [String: URLSessionDataTask] = [:]
     
     private init() {}
     
@@ -62,11 +61,8 @@ extension ImageProvider {
             completeOnTheMainThread(.success(image))
             return
         }
-        
-//        activeTasks[urlString]?.cancel()
-        
+                
         let task = URLSession.shared.dataTask(with: request) { [weak self] data, response, error in
-//            self?.activeTasks.removeValue(forKey: urlString)
             
             if let data, let response, let statusCode = (response as? HTTPURLResponse)?.statusCode {
                 if 200 ..< 300 ~= statusCode {
@@ -90,13 +86,7 @@ extension ImageProvider {
             }
         }
         
-//        activeTasks[urlString] = task
         task.resume()
     }
-    
-//    func cancelFetch(for urlString: String) {
-//        activeTasks[urlString]?.cancel()
-//        activeTasks.removeValue(forKey: urlString)
-//    }
     
 }
