@@ -42,7 +42,9 @@ extension ReviewsViewModel {
     func getReviews() {
         guard state.shouldLoad else { return }
         state.shouldLoad = false
-        reviewsProvider.getReviews(completion: gotReviews)
+        reviewsProvider.getReviews { [weak self] result in
+            self?.gotReviews(result)
+        }
     }
     
     /// Метод обновления ленты отзывов.
@@ -169,9 +171,12 @@ private extension ReviewsViewModel {
             photos: nil,
             reviewText: reviewText,
             created: created,
-            onTapShowMore: showMoreReview) { [weak self] photos, index in
+            onTapShowMore: { [weak self] id in
+                self?.showMoreReview(with: id)
+            },
+            onPhotoTap: { [weak self] photos, index in
                 self?.onPhotoTapped?(photos, index)
-            }
+            })
         
         if let avatarUrl = review.avatarUrl {
             fetchAvatar(from: avatarUrl, config.id)
